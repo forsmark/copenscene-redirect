@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>CopenScene</title>
+    <meta name="robots" content="noindex" />
+    <!--
+      copenscene.rocks forwards to where CopenScene is served. The path, query
+      and fragment come along, so a mailed link such as
+      copenscene.rocks/sign-in?secret=... opens the same page there.
+
+      This page is also 404.html, which is how GitHub Pages answers every path
+      it has no file for.
+
+      The meta refresh is for a browser without script. It cannot carry the
+      path, so it goes to the front page.
+    -->
+    <script>
+      location.replace('https://devbox.tailf4d52f.ts.net' + location.pathname + location.search + location.hash);
+    </script>
+    <meta http-equiv="refresh" content="1; url=https://devbox.tailf4d52f.ts.net/" />
+  </head>
+  <body>
+    <p><a href="https://devbox.tailf4d52f.ts.net/">CopenScene</a></p>
+  </body>
+</html>
