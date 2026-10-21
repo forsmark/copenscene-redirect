@@ -183,8 +183,8 @@ describe('the redirect page', () => {
   }
 
   it('has the downtime and maintenance texts', () => {
-    assert.match(PAGE, /<h1>CopenScene is experiencing downtime right now\.<\/h1>\s*<p>Check back later\.<\/p>/);
-    assert.match(PAGE, /<h1>Under maintenance\.<\/h1>\s*<p>Be right back!<\/p>/);
+    assert.match(PAGE, /<h1>CopenScene isn't answering right now\.<\/h1>\s*<p>Check again in a few minutes\.<\/p>/);
+    assert.match(PAGE, /<h1>CopenScene is down for maintenance\.<\/h1>\s*<p>Back soon, after a quick changeover\.<\/p>/);
   });
 
   it('is served the same as index.html and as 404.html', () => {

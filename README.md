@@ -7,11 +7,12 @@ GitHub Pages holds the certificate for the domain. See ADR 0013 and the
 Before it forwards, the page reads `status.json` and then asks the site's
 `/api/health`, within 3 seconds:
 
-- `{"maintenance": true}` shows *Under maintenance. Be right back!* and does
+- `{"maintenance": true}` shows *CopenScene is down for maintenance. Back soon, after a quick
+  changeover.* and does
   not forward. `scripts/site-status.mjs maintenance on|off` in
   `forsmark/copenscene` switches it.
-- A health check that fails or answers anything but 200 shows *CopenScene is
-  experiencing downtime right now. Check back later.*, with a button that
+- A health check that fails or answers anything but 200 shows *CopenScene
+  isn't answering right now. Check again in a few minutes.*, with a button that
   checks again.
 - A browser without script goes to the site's front page after a second.
 
