@@ -183,7 +183,7 @@ describe('the redirect page', () => {
   }
 
   it('has the downtime and maintenance texts', () => {
-    assert.match(PAGE, /<h1>CopenScene isn't answering right now\.<\/h1>\s*<p>Check again in a few minutes\.<\/p>/);
+    assert.match(PAGE, /<h1>CopenScene isn’t answering right now\.<\/h1>\s*<p>Check again in a few minutes\.<\/p>/);
     assert.match(PAGE, /<h1>CopenScene is down for maintenance\.<\/h1>\s*<p>Back soon, after a quick changeover\.<\/p>/);
   });
 

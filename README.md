@@ -12,7 +12,7 @@ Before it forwards, the page reads `status.json` and then asks the site's
   not forward. `scripts/site-status.mjs maintenance on|off` in
   `forsmark/copenscene` switches it.
 - A health check that fails or answers anything but 200 shows *CopenScene
-  isn't answering right now. Check again in a few minutes.*, with a button that
+  isn’t answering right now. Check again in a few minutes.*, with a button that
   checks again.
 - A browser without script goes to the site's front page after a second.
 
