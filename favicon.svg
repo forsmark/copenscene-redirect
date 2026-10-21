@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
+  <!-- A single C, ink on accent. Square, per the identity's one shape rule,
+       and one letter rather than a wordmark because at 16 pixels a wordmark is
+       a grey smudge. The face is a system grotesque and not Archivo: an SVG
+       icon is rendered outside the page and cannot reach a served font. -->
+  <rect width="32" height="32" fill="#FF8A00"/>
+  <text x="16" y="24" font-family="Helvetica Neue, Arial, sans-serif"
+        font-size="26" font-weight="700" text-anchor="middle"
+        fill="#0E0E10">C</text>
+</svg>

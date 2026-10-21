@@ -2,25 +2,196 @@
 <html lang="en">
   <head>
     <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="color-scheme" content="dark" />
+    <meta name="theme-color" content="#0e0e10" />
     <title>CopenScene</title>
     <meta name="robots" content="noindex" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <!--
       copenscene.rocks forwards to where CopenScene is served. The path, query
       and fragment come along, so a mailed link such as
       copenscene.rocks/sign-in?secret=... opens the same page there.
 
       This page is also 404.html, which is how GitHub Pages answers every path
-      it has no file for.
+      it has no file for. The two files are the same; test/page.test.mjs checks.
+
+      Before it forwards, the page reads /status.json, then asks the site's
+      /api/health. Maintenance on shows the maintenance page; a health check that
+      does not answer 200 within 3 seconds shows the downtime page. The
+      `site-availability` spec in forsmark/copenscene says what each does.
 
       The meta refresh is for a browser without script. It cannot carry the
-      path, so it goes to the front page.
+      path, so it goes to the front page. It sits in <noscript>, so it does not
+      forward a browser that is still checking.
     -->
-    <script>
-      location.replace('https://devbox.tailf4d52f.ts.net' + location.pathname + location.search + location.hash);
-    </script>
-    <meta http-equiv="refresh" content="1; url=https://devbox.tailf4d52f.ts.net/" />
+    <noscript><meta http-equiv="refresh" content="1; url=https://devbox.tailf4d52f.ts.net/" /></noscript>
+    <style>
+      /* The site's identity, from `visual-identity`: ground, ink, accent, square
+         corners, and Archivo, condensed caps for the wordmark. The font is a
+         copy here, since the site may be down. Text shows only with a message,
+         so a forward loads no font. */
+      @font-face {
+        font-family: 'Archivo';
+        font-style: normal;
+        font-display: swap;
+        font-weight: 100 900;
+        font-stretch: 62% 125%;
+        src: url('/fonts/archivo-latin.woff2') format('woff2-variations');
+      }
+      :root {
+        --ground: #0e0e10;
+        --ink: #fff2df;
+        --accent: #ff8a00;
+        --muted: rgb(255 242 223 / 0.62);
+        color-scheme: dark;
+      }
+      html {
+        background: var(--ground);
+      }
+      body {
+        margin: 0;
+        min-height: 100vh;
+        min-height: 100dvh;
+        background: var(--ground);
+        color: var(--ink);
+        font-family: 'Archivo', system-ui, sans-serif;
+        font-size: 0.9375rem;
+        line-height: 1.45;
+        font-variation-settings: 'wdth' 100;
+        -webkit-font-smoothing: antialiased;
+      }
+      main {
+        box-sizing: border-box;
+        max-width: 36rem;
+        margin: 0 auto;
+        padding: 1.5rem 1rem 3rem;
+      }
+      .wordmark {
+        display: inline-block;
+        margin: 0 0 3rem;
+        font-size: 1.5rem;
+        font-variation-settings: 'wdth' 68, 'wght' 900;
+        text-transform: uppercase;
+        letter-spacing: 0.06em;
+        color: var(--accent);
+        text-decoration: none;
+      }
+      h1 {
+        margin: 0 0 0.75rem;
+        font-size: 2rem;
+        line-height: 1.1;
+        font-weight: normal;
+        font-variation-settings: 'wdth' 70, 'wght' 800;
+        letter-spacing: 0.01em;
+        overflow-wrap: break-word;
+      }
+      p {
+        margin: 0 0 1.5rem;
+        font-size: 1.125rem;
+        color: var(--muted);
+      }
+      button {
+        min-height: 44px;
+        padding: 0 1.25rem;
+        border: 1px solid var(--ink);
+        border-radius: 0;
+        background: transparent;
+        color: var(--ink);
+        font: inherit;
+        font-size: 1rem;
+        font-variation-settings: 'wdth' 100, 'wght' 600;
+        cursor: pointer;
+      }
+      button:focus-visible {
+        outline: 2px solid var(--ink);
+        outline-offset: 3px;
+      }
+      button:disabled {
+        color: var(--muted);
+        border-color: var(--muted);
+        cursor: default;
+      }
+      [hidden] {
+        display: none !important;
+      }
+    </style>
   </head>
   <body>
-    <p><a href="https://devbox.tailf4d52f.ts.net/">CopenScene</a></p>
+    <main>
+      <div id="notice" hidden>
+        <p class="wordmark">copenscene</p>
+        <section id="downtime" hidden>
+          <h1>CopenScene isn’t answering right now.</h1>
+          <p>Check again in a few minutes.</p>
+          <button id="retry" type="button">Check again</button>
+        </section>
+        <section id="maintenance" hidden>
+          <h1>CopenScene is down for maintenance.</h1>
+          <p>Back soon, after a quick changeover.</p>
+        </section>
+      </div>
+      <noscript>
+        <p><a class="wordmark" href="https://devbox.tailf4d52f.ts.net/">copenscene</a></p>
+      </noscript>
+    </main>
+    <script>
+      const SITE = 'https://devbox.tailf4d52f.ts.net';
+      const WAIT_MS = 3000;
+      // Read once, so a retry forwards to the address the reader first asked for.
+      const target = SITE + location.pathname + location.search + location.hash;
+
+      async function within(url) {
+        const abort = new AbortController();
+        const timer = setTimeout(() => abort.abort(), WAIT_MS);
+        try {
+          return await fetch(url, { cache: 'no-store', signal: abort.signal });
+        } finally {
+          clearTimeout(timer);
+        }
+      }
+
+      // A status file that is missing or broken is off: it must never hide a site that is up.
+      async function maintenance() {
+        try {
+          const answer = await within('/status.json');
+          return answer.ok && (await answer.json()).maintenance === true;
+        } catch {
+          return false;
+        }
+      }
+
+      async function up() {
+        try {
+          return (await within(SITE + '/api/health')).status === 200;
+        } catch {
+          return false;
+        }
+      }
+
+      function show(state) {
+        document.getElementById('notice').hidden = false;
+        document.getElementById('downtime').hidden = state !== 'downtime';
+        document.getElementById('maintenance').hidden = state !== 'maintenance';
+        document.body.dataset.state = state;
+      }
+
+      async function check() {
+        if (await maintenance()) return show('maintenance');
+        if (await up()) return location.replace(target);
+        show('downtime');
+      }
+
+      const retry = document.getElementById('retry');
+      retry.addEventListener('click', async () => {
+        retry.disabled = true;
+        retry.textContent = 'Checking…';
+        await check();
+        retry.disabled = false;
+        retry.textContent = 'Check again';
+      });
+
+      check();
+    </script>
   </body>
 </html>
