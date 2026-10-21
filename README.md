@@ -13,7 +13,8 @@ Before it forwards, the page reads `status.json` and then asks the site's
   `forsmark/copenscene` switches it.
 - A health check that fails or answers anything but 200 shows *CopenScene
   isn’t answering right now. Check again in a few minutes.*, with a button that
-  checks again.
+  checks again and a link to go on to the site anyway, since a browser can
+  refuse the check while the site is up (Chromium on the tailnet).
 - A browser without script goes to the site's front page after a second.
 
 `index.html` and `404.html` are the same page: Pages answers every path it has

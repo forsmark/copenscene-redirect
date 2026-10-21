@@ -182,6 +182,14 @@ describe('the redirect page', () => {
     });
   }
 
+  it('offers the address first asked for on the downtime page, for a browser that refuses the check', async () => {
+    const page = open('https://copenscene.rocks/concerts/a-slug?via=digest#tickets', {});
+    await settle();
+    assert.equal(page.shown(), 'downtime');
+    assert.equal(page.elements.anyway.href, `${SITE}/concerts/a-slug?via=digest#tickets`);
+    assert.match(PAGE, /<section id="downtime" hidden>[\s\S]*<a id="anyway" class="anyway" href="https:\/\/devbox\.tailf4d52f\.ts\.net\/">Open CopenScene anyway<\/a>[\s\S]*<\/section>\s*<section id="maintenance"/);
+  });
+
   it('has the downtime and maintenance texts', () => {
     assert.match(PAGE, /<h1>CopenScene isn’t answering right now\.<\/h1>\s*<p>Check again in a few minutes\.<\/p>/);
     assert.match(PAGE, /<h1>CopenScene is down for maintenance\.<\/h1>\s*<p>Back soon, after a quick changeover\.<\/p>/);
