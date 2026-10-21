@@ -103,6 +103,20 @@
         font-variation-settings: 'wdth' 100, 'wght' 600;
         cursor: pointer;
       }
+      .actions {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 0.5rem 1.25rem;
+      }
+      .anyway {
+        display: inline-flex;
+        align-items: center;
+        min-height: 44px;
+        color: var(--ink);
+        text-underline-offset: 4px;
+      }
+      .anyway:focus-visible,
       button:focus-visible {
         outline: 2px solid var(--ink);
         outline-offset: 3px;
@@ -124,7 +138,12 @@
         <section id="downtime" hidden>
           <h1>CopenScene isn’t answering right now.</h1>
           <p>Check again in a few minutes.</p>
-          <button id="retry" type="button">Check again</button>
+          <div class="actions">
+            <button id="retry" type="button">Check again</button>
+            <!-- A browser can refuse the check while the site is up, as Chromium does on
+                 the tailnet (copenscene#814), so the reader can always go on. -->
+            <a id="anyway" class="anyway" href="https://devbox.tailf4d52f.ts.net/">Open CopenScene anyway</a>
+          </div>
         </section>
         <section id="maintenance" hidden>
           <h1>CopenScene is down for maintenance.</h1>
@@ -140,6 +159,7 @@
       const WAIT_MS = 3000;
       // Read once, so a retry forwards to the address the reader first asked for.
       const target = SITE + location.pathname + location.search + location.hash;
+      document.getElementById('anyway').href = target;
 
       async function within(url) {
         const abort = new AbortController();
