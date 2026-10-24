@@ -21,6 +21,12 @@ Before it forwards, the page reads `status.json` and then asks the site's
 no file for with `404.html`. `fonts/` holds a copy of the site's Archivo, so the
 pages look like CopenScene while the site is down.
 
+`wordmark.png` is the wordmark every mail shows, at
+`https://copenscene.rocks/wordmark.png`. It is a copy of
+`apps/web/public/wordmark.png` in `forsmark/copenscene`, which
+`scripts/mail-wordmark.mjs` draws there. The pages draw the same mark from the
+shapes of that repository's `icon.svg`. Copy both again when the mark changes.
+
 To move the site, change the address in both pages. The new host must answer
 `/api/health` with `Access-Control-Allow-Origin: https://copenscene.rocks`, or
 the page cannot read the check and shows the downtime page.

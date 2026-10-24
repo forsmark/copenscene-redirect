@@ -28,7 +28,8 @@
     <noscript><meta http-equiv="refresh" content="1; url=https://devbox.tailf4d52f.ts.net/" /></noscript>
     <style>
       /* The site's identity, from `visual-identity`: ground, ink, accent, square
-         corners, and Archivo, condensed caps for the wordmark. The font is a
+         corners, and Archivo, condensed caps for the wordmark.
+         The wordmark is the icon's ticket as its C, then OPENSCENE, then .ROCKS. The font is a
          copy here, since the site may be down. Text shows only with a message,
          so a forward loads no font. */
       @font-face {
@@ -76,6 +77,21 @@
         letter-spacing: 0.06em;
         color: var(--accent);
         text-decoration: none;
+        white-space: nowrap;
+      }
+      /* The icon's ticket as the wordmark's C, drawn from the shapes of icon.svg in
+         forsmark/copenscene, and set as the site's bar sets it. */
+      .wordmark-ticket {
+        display: inline-block;
+        height: 1.1em;
+        width: 1.364em;
+        margin-right: 0.08em;
+        vertical-align: -0.18em;
+      }
+      .wordmark-domain {
+        font-size: 0.6em;
+        letter-spacing: 0.04em;
+        color: var(--muted);
       }
       h1 {
         margin: 0 0 0.75rem;
@@ -134,7 +150,7 @@
   <body>
     <main>
       <div id="notice" hidden>
-        <p class="wordmark">copenscene</p>
+        <p class="wordmark" aria-label="CopenScene" role="img"><svg class="wordmark-ticket" viewBox="28 40 124 100" aria-hidden="true" focusable="false"><polygon points="46,40 152,40 152,122 134,140 28,140 28,58" fill="#FF8A00"/> <line x1="122" y1="47" x2="122" y2="134" stroke="#0E0E10" stroke-width="4" stroke-dasharray="4 5"/> <path fill="#0E0E10" d="M76.38 123.1Q68.1 123.1 62.8 119.58Q57.5 116.05 54.97 108.78Q52.45 101.5 52.45 90.27Q52.45 73.54 58.57 65.53Q64.68 57.52 76.69 57.52Q83.49 57.52 88.21 60.22Q92.94 62.91 95.43 68.91Q97.93 74.9 97.93 84.74H81.22Q81.22 80.67 80.83 77.85Q80.43 75.03 79.27 73.59Q78.11 72.16 75.9 72.16Q73.52 72.16 72.25 73.54Q70.98 74.91 70.56 77.6Q70.14 80.29 70.14 84.31V96.39Q70.14 100.49 70.61 103.18Q71.08 105.87 72.33 107.21Q73.59 108.54 75.95 108.54Q78.22 108.54 79.45 107.16Q80.67 105.78 81.15 103.05Q81.64 100.31 81.64 96.33H97.93Q97.93 105.83 95.46 111.73Q93 117.64 88.2 120.37Q83.41 123.1 76.38 123.1Z"/></svg><span>openScene</span><span class="wordmark-domain">.rocks</span></p>
         <section id="downtime" hidden>
           <h1>CopenScene isn’t answering right now.</h1>
           <p>Check again in a few minutes.</p>
@@ -151,7 +167,7 @@
         </section>
       </div>
       <noscript>
-        <p><a class="wordmark" href="https://devbox.tailf4d52f.ts.net/">copenscene</a></p>
+        <p><a class="wordmark" aria-label="CopenScene" href="https://devbox.tailf4d52f.ts.net/"><svg class="wordmark-ticket" viewBox="28 40 124 100" aria-hidden="true" focusable="false"><polygon points="46,40 152,40 152,122 134,140 28,140 28,58" fill="#FF8A00"/> <line x1="122" y1="47" x2="122" y2="134" stroke="#0E0E10" stroke-width="4" stroke-dasharray="4 5"/> <path fill="#0E0E10" d="M76.38 123.1Q68.1 123.1 62.8 119.58Q57.5 116.05 54.97 108.78Q52.45 101.5 52.45 90.27Q52.45 73.54 58.57 65.53Q64.68 57.52 76.69 57.52Q83.49 57.52 88.21 60.22Q92.94 62.91 95.43 68.91Q97.93 74.9 97.93 84.74H81.22Q81.22 80.67 80.83 77.85Q80.43 75.03 79.27 73.59Q78.11 72.16 75.9 72.16Q73.52 72.16 72.25 73.54Q70.98 74.91 70.56 77.6Q70.14 80.29 70.14 84.31V96.39Q70.14 100.49 70.61 103.18Q71.08 105.87 72.33 107.21Q73.59 108.54 75.95 108.54Q78.22 108.54 79.45 107.16Q80.67 105.78 81.15 103.05Q81.64 100.31 81.64 96.33H97.93Q97.93 105.83 95.46 111.73Q93 117.64 88.2 120.37Q83.41 123.1 76.38 123.1Z"/></svg><span>openScene</span><span class="wordmark-domain">.rocks</span></a></p>
       </noscript>
     </main>
     <script>
